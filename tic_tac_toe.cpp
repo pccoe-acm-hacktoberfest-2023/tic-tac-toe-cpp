@@ -20,9 +20,14 @@ bool checkWin(const vector<vector<char>>& board, char player) {
         if (board[i][0] == player && board[i][1] == player && board[i][2] == player)
             return true;
     }
+
    
     if (board[0][0] == player && board[1][1] == player && board[2][2] == player)
         return true; 
+    if (board[0][2] == player && board[1][1] == player && board[2][0] == player)
+        return true;
+
+
     return false;
 }
 
@@ -42,35 +47,37 @@ int main() {
     char currentPlayer = 'X';
     int row, col;
 
+  
+
     for (int turn = 0; turn < SIZE * SIZE; turn++) { 
         printBoard(board);
         cout << "Player " << currentPlayer << ", enter your move (row and column): ";
         cin >> row >> col;
 
-        // Validate input
+       
         if (row < 0 || row >= SIZE || col < 0 || col >= SIZE || board[row][col] != ' ') {
             cout << "Invalid move. Try again." << endl;
-            turn--; 
+            turn--;
             continue;
         }
 
         board[row][col] = currentPlayer;
 
-        
+     
         if (checkWin(board, currentPlayer)) {
             printBoard(board);
             cout << "Player " << currentPlayer << " wins!" << endl;
             return 1;
         }
 
-    
+      
         if (checkDraw(board)) {
             printBoard(board);
             cout << "It's a draw!" << endl;
             return 1;
         }
 
-        
+    
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
     }
 
